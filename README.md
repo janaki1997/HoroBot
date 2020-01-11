@@ -4,7 +4,7 @@ Contributors:
 
 
 Shaanmugam
-Janaki ;)
+Janaki 
 Harini
 Vaishnavi
 Nijamudeen
