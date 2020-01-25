@@ -4,7 +4,8 @@ from telegram.ext import MessageHandler, Filters
 
 #bot = telegram.Bot(token='1044556705:AAFMzUzmbYW7GJiYKlVL8icLEU-mSa64V0Q')
 #print (bot.get_me())
-
+date = 0
+month = 0
 updater = Updater(token='1044556705:AAFMzUzmbYW7GJiYKlVL8icLEU-mSa64V0Q', use_context=True)
 dispatcher = updater.dispatcher
 msg = "These are the 2 commands available: \n /setdate ddmm: to set the date \n /horoscope: to get your horoscope"
@@ -16,7 +17,12 @@ def error(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Please enter the right command \n\n" +msg)
 
 def setdate(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=context.args)
+    global date 
+    global month
+    date = int(context.args[0][:2]) 
+    month = int(context.args[0][2:])
+    
 
 
 
