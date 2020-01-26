@@ -2,6 +2,7 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 import func
+import spider
 
 #bot = telegram.Bot(token='1044556705:AAFMzUzmbYW7GJiYKlVL8icLEU-mSa64V0Q')
 #print (bot.get_me())
@@ -24,8 +25,12 @@ def setdate(update, context):
     month = int(context.args[0][2:])
     sign = func.get_sign(date,month)
     context.bot.send_message(chat_id=update.effective_chat.id, text="Your sign is " + sign)
-    
 
+def horoscope(update, context):
+    desc = spider.get_description(sign)
+    context.bot.send_message(chat_id=update.effective_chat.id, text= desc)
+    
+    
 updater = Updater(token='1044556705:AAFMzUzmbYW7GJiYKlVL8icLEU-mSa64V0Q', use_context=True)
 dispatcher = updater.dispatcher
 
@@ -34,6 +39,9 @@ dispatcher.add_handler(start_handler)
 
 error_handler = MessageHandler(Filters.text, error)
 dispatcher.add_handler(error_handler)
+
+horoscope_handler = CommandHandler('horoscope', horoscope)
+dispatcher.add_handler(horoscope_handler)
 
 setdate_handler = CommandHandler('setdate', setdate)
 dispatcher.add_handler(setdate_handler)
