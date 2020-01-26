@@ -1,13 +1,13 @@
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
+import func
 
 #bot = telegram.Bot(token='1044556705:AAFMzUzmbYW7GJiYKlVL8icLEU-mSa64V0Q')
 #print (bot.get_me())
 date = 0
 month = 0
-updater = Updater(token='1044556705:AAFMzUzmbYW7GJiYKlVL8icLEU-mSa64V0Q', use_context=True)
-dispatcher = updater.dispatcher
+sign = ''
 msg = "These are the 2 commands available: \n /setdate ddmm: to set the date \n /horoscope: to get your horoscope"
 
 def start(update, context):
@@ -17,15 +17,17 @@ def error(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Please enter the right command \n\n" +msg)
 
 def setdate(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=context.args)
     global date 
     global month
+    global sign
     date = int(context.args[0][:2]) 
     month = int(context.args[0][2:])
+    sign = func.get_sign(date,month)
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Your sign is " + sign)
     
 
-
-
+updater = Updater(token='1044556705:AAFMzUzmbYW7GJiYKlVL8icLEU-mSa64V0Q', use_context=True)
+dispatcher = updater.dispatcher
 
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
